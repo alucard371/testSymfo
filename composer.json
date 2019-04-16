@@ -16,6 +16,7 @@
         "symfony/orm-pack": "^1.0",
         "symfony/profiler-pack": "^1.0",
         "symfony/requirements-checker": "^1.1",
+        "symfony/security-csrf": "4.2.*",
         "symfony/validator": "4.2.*",
         "symfony/yaml": "4.2.*"
     },

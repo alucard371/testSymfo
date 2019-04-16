@@ -13,6 +13,13 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\ArticleType;
 
+use Symfony\Component\Form\Forms;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
+use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
+use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
+use Symfony\Component\Security\Csrf\CsrfTokenManager;
+
 /** @Route("/blog", name="blog/") */
 class BlogController extends AbstractController
 {
@@ -78,6 +85,21 @@ class BlogController extends AbstractController
      */
     public function addArticle(Request $request)
     {
+
+
+        // creates a Session object from the HttpFoundation component
+        $session = new Session();
+
+        $csrfGenerator = new UriSafeTokenGenerator();
+        $csrfStorage = new SessionTokenStorage($session);
+        $csrfManager = new CsrfTokenManager($csrfGenerator, $csrfStorage);
+
+        $formFactory = Forms::createFormFactoryBuilder()
+        // ...
+            ->addExtension(new CsrfExtension($csrfManager))
+            ->getFormFactory();
+
+
           // creates an article and gives it some dummy data for this example
           $article = new Article();
 
