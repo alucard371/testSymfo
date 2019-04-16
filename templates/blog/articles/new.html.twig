@@ -1,0 +1,13 @@
+{% extends 'section/layout.html.twig' %}
+
+
+{% block title %}Add an article !{% endblock %}
+
+{% block body %}
+{{ article.auteur }}
+{{ article.corps }}
+{{ article.creationDate|date("m/d/Y", "Europe/Paris") }}
+<section>
+{{ form(form) }}
+</section>
+{% endblock %}
