@@ -8,28 +8,10 @@
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-        <link rel="stylesheet" href="../public/assets/footer.css">
+        <link rel="stylesheet" href="../public/assets/style.css">
 
     </head>
     <body>
-        {# templates/base.html.twig #}
-
-        {# read and display just one flash message type #}
-        {% for message in app.flashes('notice') %}
-            <div class="flash-notice">
-                {{ message }}
-            </div>
-        {% endfor %}
-
-        {# read and display several types of flash messages #}
-        {% for label, messages in app.flashes(['success', 'warning']) %}
-            {% for message in messages %}
-                <div class="flash-{{ label }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-
         {# read and display all flash messages #}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
@@ -38,6 +20,7 @@
                 </div>
             {% endfor %}
         {% endfor %}
+        
         {% block header %}{% endblock %}
         {% block body %}{% endblock %}
         {% block footer %}{% endblock %}

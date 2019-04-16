@@ -1,0 +1,42 @@
+{% extends 'section/layout.html.twig' %}
+
+{% block menu %}
+
+{% endblock %}
+
+{% block body %}
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="row">#</th>
+                {% for article in articles %}
+                    <th>{{  loop.index  }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">auteur</th>
+                {% for article in articles %}
+                    <th>{{  article.auteur  }}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">article</th>
+                {% for article in articles %}
+                    <th>{{  article.corps  }}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">suppression</th>
+                {% for article in articles %}
+                    <th>
+                        <a class="btn btn-primary" href={{ path('blog/destroy',{ "id" : article.id}) }}><button>destroy</button></a>
+                    </th>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

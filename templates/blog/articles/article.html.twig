@@ -1,0 +1,29 @@
+{% extends 'section/layout.html.twig' %}
+
+{% block body %}
+    {{ article.auteur }}
+    {{ article.corps }}
+    {{ article.creationDate|date("m/d/Y", "Europe/Paris") }}
+
+    <nav>
+    
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light articles-menu">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+     {% for art in articles %}
+        <li class="nav-item active">
+            <a class="nav-link" href={{ path('blog/show',{ "id" : art.id} ) }}>
+            {{ art.auteur|e }}
+            </a>
+        </li>
+    {% endfor %}
+     <a class="btn btn-primary" href={{ path('blog/destroy',{ 'id' : article.id}) }}><button>effacer</button></a>
+    </ul>
+  </div>
+</nav>
+{% endblock %}
