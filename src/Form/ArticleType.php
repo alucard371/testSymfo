@@ -19,14 +19,12 @@ class ArticleType extends AbstractType
         $builder
 
             ->add('auteur', TextType::class,[
-
                   'label' => 'auteur'
               ])
               ->add('corps', TextareaType::class,[
-
               ])
               ->add('creation_date', DateType::class)
-              ->add('save', SubmitType::class, ['label' => 'Create Article'])
+              
         ;
     }
 

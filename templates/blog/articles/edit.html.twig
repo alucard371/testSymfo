@@ -1,7 +1,7 @@
 {% extends 'section/layout.html.twig' %}
 
 
-{% block title %}Add an article !{% endblock %}
+{% block title %}Update an article !{% endblock %}
 
 {% block body %}
 {{ article.auteur }}
@@ -27,7 +27,7 @@
 {# fields errors #}
 {{ form_errors(form.creation_date) }}
 
-<a class="btn btn-primary" href={{ path('blog/article/new') }}><button>créer</button></a>
+<a class="btn btn-primary" href={{ path('blog/article/edit',{ 'id' : article.id}) }}><button>edit</button></a>
 
 {{form_end(form)}}
 

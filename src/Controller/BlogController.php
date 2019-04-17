@@ -95,15 +95,15 @@ class BlogController extends AbstractController
         $csrfManager = new CsrfTokenManager($csrfGenerator, $csrfStorage);
 
         $formFactory = Forms::createFormFactoryBuilder()
-        // ...
+        
             ->addExtension(new CsrfExtension($csrfManager))
             ->getFormFactory();
 
 
-          // creates an article and gives it some dummy data for this example
-          $article = new Article();
+        // creates an article
+        $article = new Article();
 
-        // $article = new Article();
+        
         $form = $this->createForm(ArticleType::class, $article);
   
         //   $form = $this->createFormBuilder($article)
@@ -129,15 +129,66 @@ class BlogController extends AbstractController
                   
                   $this->addFlash(
                     'notice',
-                    'Your article were saved!'
+                    'Votre article à été créer !'
                 );
               }
-          return $this->render('blog/articles/new.html.twig', [
-              'article' => $article,
-              'form' => $form->createView(),
+            return $this->render('blog/articles/new.html.twig', [
+                    'article' => $article,
+                    'form' => $form->createView(),
           ]);
     }
 
+
+    /**
+     * @Route("/article/edit/{id}", name="article/edit", requirements={"^[1-9]\d*$"})
+     */
+    public function updateArticle(Request $request,$id=null)
+    {
+        // creates a Session object from the HttpFoundation component
+        $session = new Session();
+
+        $csrfGenerator = new UriSafeTokenGenerator();
+        $csrfStorage = new SessionTokenStorage($session);
+        $csrfManager = new CsrfTokenManager($csrfGenerator, $csrfStorage);
+
+        $formFactory = Forms::createFormFactoryBuilder()
+        
+            ->addExtension(new CsrfExtension($csrfManager))
+            ->getFormFactory();
+
+        if ($id)
+        {
+             $article = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->find($id);
+        }
+        else
+        {
+            $this->addFlash(
+                'warning',
+                'No article with this id!');
+            return $this->redirectToRoute('home');
+        }
+
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+              if ($form->isSubmitted() && $form->isValid()) {
+                  // $form->getData() holds the submitted values
+                  // but, the original `$article` variable has also been updated
+          
+                  $entityManager = $this->getDoctrine()->getManager();
+                  $entityManager->persist($article);
+                  $entityManager->flush();
+
+                  $this->addFlash("warning", "votre article à été modifié");
+                  return $this->redirectToRoute('home');};
+
+                  return $this->render('blog/articles/edit.html.twig', [
+                    'article' => $article,
+                    'form' => $form->createView(),
+          ]);
+    }
 
     /**
      * @Route("/article/destroy/{id}", name="destroy")

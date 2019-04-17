@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -14,13 +15,19 @@ class Article
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     * 
+     * @Assert\NotNull
+     * @Length(
+     * min=2,
+     * max=100,
+     * minMessage = "Your name must be at least {{ limit }} characters long",
+     * maxMessage = "Your name cannot be longer than {{ limit }} characters")
+     *
      */
     private $auteur;
 
@@ -32,6 +39,7 @@ class Article
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
      */
     private $creation_date;
 
