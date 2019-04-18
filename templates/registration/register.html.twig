@@ -1,0 +1,17 @@
+{% extends 'section/layout.html.twig' %}
+
+{% block title %}
+<h1>Register</h1>
+{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.password.first) }}
+    {{ form_row(form.password.second) }}
+    
+    <h1>test</h1>
+    <a class="btn"><button type="submit">Register</button></a>
+{{ form_end(form) }}
+{% endblock %}

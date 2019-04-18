@@ -11,7 +11,7 @@
             <tr>
                 <th scope="row">#</th>
                 {% for article in articles %}
-                    <th>{{  loop.index  }}</th>
+                    <th>{{  article.id  }}</th>
                 {% endfor %}
             </tr>
         </thead>
@@ -33,6 +33,14 @@
                 {% for article in articles %}
                     <th>
                         <a class="btn btn-primary" href={{ path('blog/destroy',{ "id" : article.id}) }}><button>destroy</button></a>
+                    </th>
+                {% endfor %}
+            </tr>
+             <tr>
+                <th scope="row">Modification</th>
+                {% for article in articles %}
+                    <th>
+                        <a class="btn btn-info" href={{ path('blog/article/edit', {"id" : article.id}) }} tabindex="-1" aria-disabled="true">Update</a>
                     </th>
                 {% endfor %}
             </tr>

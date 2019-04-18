@@ -1,0 +1,30 @@
+{% block title %}Update a comment{% endblock %}
+
+{% block body %}
+
+<div class="container">
+<section>
+{{form_start(form)}}
+{# general errors #}
+{{form_errors(form)}}
+
+{{ form_label(form.author) }}
+{{ form_widget(form.author) }}
+{# fields errors #}
+{{ form_errors(form.author) }}
+
+{{ form_label(form.description) }}
+{{ form_widget(form.description) }}
+{# fields errors #}
+{{ form_errors(form.description) }}
+
+{{ form_label(form.corps) }}
+{{ form_widget(form.corps) }}
+{# fields errors #}
+{{ form_errors(form.corps) }}
+
+<a class="btn btn-primary"><button>submit</button></a>
+
+{{form_end(form)}}
+
+</div>{% endblock %}

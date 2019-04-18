@@ -21,4 +21,10 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
+
+    public function logout()
+    {
+        //Un controleur ne peut être vide
+        throw new \Exception('Activer logout dans security.yaml');
+    }
 }

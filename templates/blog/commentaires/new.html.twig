@@ -1,0 +1,30 @@
+{% extends 'section/layout.html.twig' %}
+
+
+{% block title %}Add a comment !{% endblock %}
+
+{% block body %}
+<section>
+{{form_start(form)}}
+{# general errors #}
+{{form_errors(form)}}
+
+{{ form_label(form.auteur) }}
+{{ form_widget(form.auteur) }}
+{# fields errors #}
+{{ form_errors(form.auteur) }}
+
+{{ form_label(form.description) }}
+{{ form_widget(form.description) }}
+{# fields errors #}
+{{ form_errors(form.description) }}
+
+{{ form_label(form.corps) }}
+{{ form_widget(form.corps) }}
+{# fields errors #}
+{{ form_errors(form.corps) }}
+
+{{form_end(form)}}
+
+</section>
+{% endblock %}

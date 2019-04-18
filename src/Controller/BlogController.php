@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Article;
+use App\Entity\Comment;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -12,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\ArticleType;
+use App\Form\CommentType;
 
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -37,7 +39,7 @@ class BlogController extends AbstractController
     /**
      * @Route("/show/{id}", name="show", requirements={"^[1-9]\d*$"})
      */
-    public function show($id)
+    public function show($id, Request $request, Article $article)
     {
         $article = $this->getDoctrine()
             ->getRepository(Article::class)
@@ -49,17 +51,43 @@ class BlogController extends AbstractController
             );
         }
 
+           // creates a comment
+           $comment = new Comment();
+           $form = $this->createForm(CommentType::class, $comment);
+
+           $form->handleRequest($request);
+
+              if ($form->isSubmitted() && $form->isValid()) {
+
+                  $entityManager = $this->getDoctrine()->getManager();
+                  $article->addComment($comment);
+                  $entityManager->persist($comment);
+                //   $comment->setArticle($article);
+                  $entityManager->flush();
+                  
+                  $this->addFlash(
+                    'notice',
+                    'Votre commentaire à été créer !'
+                );
+                
+            //     return $this->redirectToRoute('show',
+            // ['id' => $id]);
+              }
+
         $articles = $this->getDoctrine()
         ->getRepository(Article::class)
         ->findAll();
 
-    if (!$articles) {
-        throw $this->createNotFoundException(
-            'No articles found'
-        );
+        if (!$articles) {
+            throw $this->createNotFoundException(
+                'No articles found'
+            );
     }
-
-        return $this->render('blog/articles/article.html.twig', ['article' => $article, 'articles' => $articles]);
+        return $this->render('blog/articles/article.html.twig', [
+            'article' => $article,
+            'articles' => $articles,
+            'form' => $form->createView(),
+  ]);
     }
 
     /**
@@ -77,6 +105,7 @@ class BlogController extends AbstractController
             );
         }
         return $this->render('blog/articles/articles.html.twig', ['articles' => $articles]);
+        
     }
 
 
@@ -85,8 +114,6 @@ class BlogController extends AbstractController
      */
     public function addArticle(Request $request)
     {
-
-
         // creates a Session object from the HttpFoundation component
         $session = new Session();
 
@@ -137,7 +164,6 @@ class BlogController extends AbstractController
                     'form' => $form->createView(),
           ]);
     }
-
 
     /**
      * @Route("/article/edit/{id}", name="article/edit", requirements={"^[1-9]\d*$"})
@@ -191,6 +217,45 @@ class BlogController extends AbstractController
     }
 
     /**
+     * @Route("/article/{slug}/comment/edit/{id}", name="comment/edit", requirements={"^[1-9]\d*$"})
+     */
+    public function updateComment($id,Request $request)
+    {
+        
+             $comment = $this->getDoctrine()
+            ->getRepository(Comment::class)
+            ->find($id);
+
+            if (!$comment) {
+                throw $this->createNotFoundException(
+                    'No comment found for id ' . $id
+                );
+            }
+
+            $form = $this->createForm(CommentType::class, $comment);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($comment);
+              //   $comment->setArticle($article);
+                $entityManager->flush();
+                
+                
+            $this->addFlash("warning", "votre comment à été modifié");
+            return $this->redirectToRoute('home');};
+
+            return $this->render('blog/commentaires/edit.html.twig', [
+              'comment' => $comment,
+              'form' => $form->createView(),
+    ]);
+
+
+    }
+
+    /**
      * @Route("/article/destroy/{id}", name="destroy")
      */
     public function destroyArticle($id)
@@ -203,7 +268,29 @@ class BlogController extends AbstractController
             $entityManager->remove($article);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home');
             $this->addFlash("warning", "votre article à été supprimé");
+            return $this->redirectToRoute('home');
+            
     }
+
+    /**
+     * @Route("/article/comment/destroy/{id}", name="destroyComment")
+     */
+    public function destroyComment($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Comment::class);
+        $comment = $repository->find($id);
+        // $entityManager->remove($comment);
+        $entityManager->removeComment($comment);
+        $entityManager->flush();
+
+
+       
+        $this->addFlash("warning", "votre commentaire à été supprimé");
+        return $this->redirectToRoute('blog/show_all ');
+    }
+
+
+
 }
