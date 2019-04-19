@@ -11,7 +11,9 @@
             <tr>
                 <th scope="row">#</th>
                 {% for article in articles %}
-                    <th>{{  article.id  }}</th>
+                    <th>
+                        <a class="btn btn-primary" href={{ path('blog/show',{ "id" : article.id}) }}><button>{{  article.id  }}</button></a>
+                    </th>
                 {% endfor %}
             </tr>
         </thead>

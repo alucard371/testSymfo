@@ -47,4 +47,18 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+    * @return an article object with all the comments attached to it
+    */
+    public function findArticleWithComments($id)
+    {
+        return $this->createQueryBuilder('article')
+        ->where('article.id=:id')
+        ->setParameter('id', '$id')
+        ->leftJoin('article.comments', 'comment')
+        ->addSelect('comment')
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
 }

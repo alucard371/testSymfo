@@ -46,8 +46,12 @@
                 </li>
             {% endif %}
             </ul>
+            <div class="container">
                  <a class="btn btn-info" href={{ path('blog/article/new') }} tabindex="-1" aria-disabled="true">New article</a>
+            </div>
+            <div>
                  <a class="btn btn-primary" href={{ path('blog/show_all') }}><button>List</button></a>
+            </div>
         </div>
     </nav>
 {% endblock %}
@@ -60,12 +64,6 @@
 
 {% block footer %}
     <footer class="blog-footer">
-        <p>Blog template built for
-            <a href="https://getbootstrap.com/">Bootstrap</a>
-            by
-            <a href="https://twitter.com/mdo">@mdo</a>.</p>
-        <p>
-            <a href="#">Back to top</a>
-        </p>
+       
     </footer>
 {% endblock %}
