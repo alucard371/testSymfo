@@ -193,7 +193,7 @@ class BlogController extends AbstractController
             $this->addFlash(
                 'warning',
                 'No article with this id!');
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('accueil');
         }
 
         $form = $this->createForm(ArticleType::class, $article);
