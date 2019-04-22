@@ -56,6 +56,14 @@ class User implements UserInterface
     private $prenom;
 
     /**
+     * @ORM\Column(type="string", length="200", nullable="true")
+     * @Assert\NotBlank(message="Please, upload the product brochure as a png or jpg pic.")
+     * @Assert\File(mimeTypes={ "image/png" })
+     * @Assert\File(mimeTypes={ "image/jpeg" })
+     */
+    private $avatar;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $age;
@@ -155,6 +163,18 @@ class User implements UserInterface
     public function setAge(?int $age): self
     {
         $this->age = $age;
+
+        return $this;
+    }
+
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

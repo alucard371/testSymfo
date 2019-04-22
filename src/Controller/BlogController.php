@@ -208,7 +208,7 @@ class BlogController extends AbstractController
                   $entityManager->flush();
 
                   $this->addFlash("warning", "votre article à été modifié");
-                  return $this->redirectToRoute('home');};
+                  return $this->redirectToRoute('blog/accueil');};
 
                   return $this->render('blog/articles/edit.html.twig', [
                     'article' => $article,
@@ -245,7 +245,7 @@ class BlogController extends AbstractController
                 
                 
             $this->addFlash("warning", "votre comment à été modifié");
-            return $this->redirectToRoute('home');};
+            return $this->redirectToRoute('blog/accueil');};
 
             return $this->render('blog/commentaires/edit.html.twig', [
               'comment' => $comment,
@@ -269,7 +269,7 @@ class BlogController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash("warning", "votre article à été supprimé");
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('blog/accueil');
             
     }
 
@@ -284,9 +284,6 @@ class BlogController extends AbstractController
         // $entityManager->remove($comment);
         $entityManager->removeComment($comment);
         $entityManager->flush();
-
-
-       
         $this->addFlash("warning", "votre commentaire à été supprimé");
         return $this->redirectToRoute('blog/show_all ');
     }

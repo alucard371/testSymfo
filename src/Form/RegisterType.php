@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class RegisterType extends AbstractType
 {
@@ -31,6 +32,7 @@ class RegisterType extends AbstractType
             ->add('name', TextType::class)
             ->add('prenom', TextType::class)
             ->add('age', IntegerType::class)
+            ->add('avatar', FileType::class, ['label' => 'Avatar (jpg,jpeg,png'])
             ->add('roles', ChoiceType::class,[
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
