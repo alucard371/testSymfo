@@ -72,6 +72,42 @@ class User implements UserInterface
      */
     private $roles = [];
 
+    /**
+     * One user can be adopter
+     * @ORM\OneToOne(targetEntity="Adopter", mappedBy="user")
+     */
+    private $adopter;
+
+    /**
+     * One user can be owner
+     * @ORM\OneToOne(targetEntity="Owner", mappedBy="user")
+     */
+    private $owner;
+    
+    public function getAdopter()
+    {
+        return $this->adopter;
+    }
+
+    public function setAdopter($adopter)
+    {
+        $this->adopter = $adopter;
+
+        return $this;
+    }
+
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
     public function __construct()
     {
         $this->roles = array('ROLE_USER');

@@ -37,6 +37,9 @@ class RegisterType extends AbstractType
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
                     'User' => 'ROLE_USER',
+                    'Owner'=> 'ROLE_OWNER',
+                    'Adopter'=> 'ROLE_ADOPTER',
+                    'Both' => 'ROLE_BOTH',
                 ],
                 'multiple' => true,
             ])
