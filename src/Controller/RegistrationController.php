@@ -25,10 +25,10 @@ class RegistrationController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $file = $avatar->getBrochure();
+            $file = $user->getAvatar();
             $fileName = $fileUploader->upload($file);
 
-            $avatar->setBrochure($fileName);
+            $user->setAvatar($fileName);
 
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
@@ -41,7 +41,7 @@ class RegistrationController extends Controller
 
             $this->addFlash("warning", "votre inscription est terminé");
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('blog/accueil');
         }
 
         return $this->render(

@@ -56,10 +56,9 @@ class User implements UserInterface
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length="200", nullable="true")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Please, upload the product brochure as a png or jpg pic.")
      * @Assert\File(mimeTypes={ "image/png" })
-     * @Assert\File(mimeTypes={ "image/jpeg" })
      */
     private $avatar;
 
