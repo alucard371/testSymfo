@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\Article;
 
 class ArticleType extends AbstractType
@@ -18,6 +19,7 @@ class ArticleType extends AbstractType
     {
         $builder
 
+            ->add('creation_date', DateType::class)
             ->add('auteur', TextType::class,[
                   'label' => 'auteur'
               ])
@@ -27,7 +29,15 @@ class ArticleType extends AbstractType
               ->add('corps', TextareaType::class,[
                   'label' => 'corps'
               ])
-              ->add('creation_date', DateType::class)
+              ->add('categorie', ChoiceType::class,[
+                  'choices' => [
+                      'health' => 'health',
+                      'security' => 'security',
+                      'common things' => 'common',
+                      'thoughts' => 'thoughts'
+                  ]
+              ])
+              
               
         ;
     }

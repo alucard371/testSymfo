@@ -56,6 +56,11 @@ class Article
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $categorie;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -141,6 +146,18 @@ class Article
                 $comment->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategorie(): ?string
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(string $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }
