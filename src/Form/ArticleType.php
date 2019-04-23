@@ -21,7 +21,11 @@ class ArticleType extends AbstractType
             ->add('auteur', TextType::class,[
                   'label' => 'auteur'
               ])
+              ->add('titre', TextType::class,[
+                  'label' => 'titre'
+              ])
               ->add('corps', TextareaType::class,[
+                  'label' => 'corps'
               ])
               ->add('creation_date', DateType::class)
               

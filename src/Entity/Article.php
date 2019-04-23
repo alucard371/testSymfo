@@ -46,6 +46,12 @@ class Article
     private $creation_date;
 
     /**
+     * @ORM\Column(type="string")
+     * @ASSERT\NotBlank
+     */
+    private $titre;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", orphanRemoval=true)
      */
     private $comments;
@@ -80,6 +86,18 @@ class Article
     public function setCorps(string $corps): self
     {
         $this->corps = $corps;
+
+        return $this;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): self
+    {
+        $this->titre = $titre;
 
         return $this;
     }
