@@ -5,7 +5,16 @@
 {% endblock %}
 
 {% block body %}
-
+    {# <ul>
+    {% for page in pages %}
+        <li>
+        {{ page.title }}
+        </li>
+    {% endfor %}
+    </ul>
+    <div class="navigation">
+        {{ knp_pagination_render(pages) }}
+    </div> #}
     <table class="table table-dark">
         <thead>
             <tr>
@@ -22,6 +31,12 @@
                 <th scope="row">auteur</th>
                 {% for article in articles %}
                     <th>{{  article.auteur  }}</th>
+                {% endfor %}
+            </tr>
+             <tr>
+                <th scope="row">titre</th>
+                {% for article in articles %}
+                    <th>{{  article.titre  }}</th>
                 {% endfor %}
             </tr>
             <tr>

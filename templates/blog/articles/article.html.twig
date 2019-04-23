@@ -19,14 +19,15 @@
   </div>
 </nav>
 <div>
-    {{ article.auteur }}
-    {{ article.corps }}
-    {{ article.creationDate|date("m/d/Y", "Europe/Paris") }}
+  <span>{{ article.auteur }}</span>
+  <span>{{ article.titre }}</span>
+  <span>{{ article.corps }}</span> 
+  <span>{{ article.creationDate|date("m/d/Y", "Europe/Paris") }}</span>
 </div>
 
 <div class="container">
 <table class="table table-striped table-dark">
-  
+  <h1>Comentaires</h1>
   <tbody>
     <tr>
     <th scope="row">id</th>

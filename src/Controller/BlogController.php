@@ -22,6 +22,10 @@ use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
 use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
+//include paginator interface
+use Knp\Component\Pager\PaginatorInterface;
+use knp_paginator;
+
 /** @Route("/blog", name="blog/") */
 class BlogController extends AbstractController
 {
@@ -93,18 +97,37 @@ class BlogController extends AbstractController
     /**
      * @Route("/show", name="show_all")
      */
-    public function showAll()
+    public function showAll(Request $request, PaginatorInterface $paginator)
     {
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
+            // ->createQueryBuilder('p')
             ->findAll();
+            // ->select('*')
+            // ->addOrderBy('p.id', 'ASC')
+            // ->getQuery();
+
+        // $pages = $paginator->paginate(
+        //     $articles,
+        //     $request->query->getInt('page', 1),
+        //     5
+        // );
+
+        
 
         if (!$articles) {
             throw $this->createNotFoundException(
                 'No articles found'
             );
+            $this->addFlash(
+                'danger',
+                'No articles found!'
+            );
         }
-        return $this->render('blog/articles/articles.html.twig', ['articles' => $articles]);
+        return $this->render('blog/articles/articles.html.twig', [
+            'articles' => $articles,
+            // 'pages' => $pages,
+            ]);
         
     }
 
@@ -132,16 +155,6 @@ class BlogController extends AbstractController
 
         
         $form = $this->createForm(ArticleType::class, $article);
-  
-        //   $form = $this->createFormBuilder($article)
-        //       ->add('auteur', TextType::class,[
-        //           'label' => 'auteur'
-        //       ])
-        //       ->add('corps', TextareaType::class,[
-        //       ])
-        //       ->add('creation_date', DateType::class)
-        //       ->add('save', SubmitType::class, ['label' => 'Create Article'])
-        //       ->getForm();
 
               $form->handleRequest($request);
 

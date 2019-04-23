@@ -5,6 +5,7 @@
 
 {% block body %}
 {{ article.auteur }}
+{{ article.titre }}
 {{ article.corps }}
 {{ article.creationDate|date("m/d/Y", "Europe/Paris") }}
 <section>
@@ -16,6 +17,11 @@
 {{ form_widget(form.auteur) }}
 {# fields errors #}
 {{ form_errors(form.auteur) }}
+
+{{ form_label(form.titre) }}
+{{ form_widget(form.titre) }}
+{# fields errors #}
+{{ form_errors(form.titre) }}
 
 {{ form_label(form.corps) }}
 {{ form_widget(form.corps) }}
