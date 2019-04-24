@@ -1,25 +1,13 @@
 {% extends 'section/layout.html.twig' %}
 
-{% block menu %}
-
-{% endblock %}
-
 {% block body %}
-    {# <ul>
-    {% for page in pages %}
-        <li>
-        {{ page.title }}
-        </li>
-    {% endfor %}
-    </ul>
-    <div class="navigation">
-        {{ knp_pagination_render(pages) }}
-    </div> #}
+    <div class="table-responsive">
     <table class="table table-dark">
         <thead>
             <tr>
                 <th scope="row">#</th>
-                {% for article in articles %}
+                {% for article in pagination %}
+        
                     <th>
                         <a class="btn btn-primary" href={{ path('blog/show',{ "id" : article.id}) }}><button>{{  article.id  }}</button></a>
                     </th>
@@ -29,25 +17,33 @@
         <tbody>
             <tr>
                 <th scope="row">auteur</th>
-                {% for article in articles %}
+                {% for article in pagination %}
                     <th>{{  article.auteur  }}</th>
                 {% endfor %}
             </tr>
              <tr>
                 <th scope="row">titre</th>
-                {% for article in articles %}
-                    <th>{{  article.titre  }}</th>
+                {% for article in pagination %}
+                    {% if article.titre|length <= 0 %}
+                        <th>Pas de titre</th>
+                    {% else %}
+                        <th>{{  article.titre  }}</th>
+                    {% endif %}
                 {% endfor %}
             </tr>
             <tr>
-                <th scope="row">article</th>
-                {% for article in articles %}
-                    <th>{{  article.corps  }}</th>
+                <th scope="row">Excerpt article</th>
+                {% for article in pagination %}
+                    {% if article.corps|length > 30 %}
+                        <th>{{  article.corps[:31]  }}</th>
+                    {% else %}
+                        <th>{{  article.corps  }}</th>
+                    {% endif %}
                 {% endfor %}
             </tr>
             <tr>
                 <th scope="row">suppression</th>
-                {% for article in articles %}
+                {% for article in pagination %}
                     <th>
                         <a class="btn btn-primary" href={{ path('blog/destroy',{ "id" : article.id}) }}><button>destroy</button></a>
                     </th>
@@ -55,7 +51,7 @@
             </tr>
              <tr>
                 <th scope="row">Modification</th>
-                {% for article in articles %}
+                {% for article in pagination %}
                     <th>
                         <a class="btn btn-info" href={{ path('blog/article/edit', {"id" : article.id}) }} tabindex="-1" aria-disabled="true">Update</a>
                     </th>
@@ -63,5 +59,15 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="count">
+    {{ pagination.getTotalItemCount }}
+</div>
+
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+    </div>
+    
 
 {% endblock %}

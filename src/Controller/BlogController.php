@@ -34,8 +34,18 @@ class BlogController extends AbstractController
      */
     public function accueil()
     {
+        $articles = $this->getDoctrine()
+        ->getRepository(Article::class)
+        ->findAll();
+
+        if (!$articles) {
+            throw $this->createNotFoundException(
+                'No articles found'
+            );
+        }
+
         return $this->render('blog/accueil.html.twig', [
-            'controller_name' => 'BlogController',
+            'articles' => $articles,
             
         ]);
     }
@@ -86,7 +96,7 @@ class BlogController extends AbstractController
             throw $this->createNotFoundException(
                 'No articles found'
             );
-    }
+        }
         return $this->render('blog/articles/article.html.twig', [
             'article' => $article,
             'articles' => $articles,
@@ -99,19 +109,25 @@ class BlogController extends AbstractController
      */
     public function showAll(Request $request, PaginatorInterface $paginator)
     {
+
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
-            // ->createQueryBuilder('p')
             ->findAll();
-            // ->select('*')
-            // ->addOrderBy('p.id', 'ASC')
-            // ->getQuery();
 
-        // $pages = $paginator->paginate(
-        //     $articles,
-        //     $request->query->getInt('page', 1),
-        //     5
-        // );
+        $query = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->createQueryBuilder('articles')
+            
+            // ->from('Article', 'articles')
+            ->addOrderBy('articles.id', 'ASC')
+            ->getQuery();
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            5
+        );
+        
 
         
 
@@ -126,7 +142,7 @@ class BlogController extends AbstractController
         }
         return $this->render('blog/articles/articles.html.twig', [
             'articles' => $articles,
-            // 'pages' => $pages,
+            'pagination' => $pagination,
             ]);
         
     }
@@ -253,7 +269,7 @@ class BlogController extends AbstractController
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($comment);
-              //   $comment->setArticle($article);
+              //$comment->setArticle($article);
                 $entityManager->flush();
                 
                 
@@ -294,11 +310,11 @@ class BlogController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository(Comment::class);
         $comment = $repository->find($id);
-        // $entityManager->remove($comment);
-        $entityManager->removeComment($comment);
+        $entityManager->remove($comment);
+        // $entityManager->removeComment($comment);
         $entityManager->flush();
         $this->addFlash("warning", "votre commentaire à été supprimé");
-        return $this->redirectToRoute('blog/show_all ');
+        return $this->redirectToRoute('blog/show_all');
     }
 
 

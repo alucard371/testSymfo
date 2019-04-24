@@ -7,51 +7,43 @@
     
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href={{ path('blog/accueil') }}>Raining Cats</a>
-        
-        
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-               {% if current ==  'mentions' %}
+               {% if current ==  'blog/article/new' %}
            <li class="nav-item">
-                    <a class="nav-link active" href={{ path('mentions') }} tabindex="-1" aria-disabled="true">mentions</a>
+                    <a class="nav-link active" href={{ path('blog/article/new') }} tabindex="-1" aria-disabled="true">Nouvel article</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href={{ path('contact') }} tabindex="-1" aria-disabled="true">contact</a>
+                    <a class="nav-link" href={{ path('blog/show_all') }} tabindex="-1" aria-disabled="true">Liste article</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href={{ path('blog/accueil') }} tabindex="-1" aria-disabled="true">accueil</a>
                 </li>
-        {% elseif current ==  'contact' %}
+        {% elseif current ==  'blog/show_all' %}
           <li class="nav-item">
-                    <a class="nav-link" href={{ path('mentions') }} tabindex="-1" aria-disabled="true">mentions</a>
+                    <a class="nav-link" href={{ path('blog/article/new') }} tabindex="-1" aria-disabled="true">Nouvel article</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href={{ path('contact') }} tabindex="-1" aria-disabled="true">contact</a>
+                    <a class="nav-link active" href={{ path('blog/show_all') }} tabindex="-1" aria-disabled="true">Liste article</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href={{ path('blog/accueil') }} tabindex="-1" aria-disabled="true">accueil</a>
                 </li>
-            {% elseif current == 'log/accueil' %}
+            {% elseif current == 'blog/accueil' %}
               <li class="nav-item">
-                    <a class="nav-link" href={{ path('mentions') }} tabindex="-1" aria-disabled="true">mentions</a>
+                    <a class="nav-link" href={{ path('blog/article/new') }} tabindex="-1" aria-disabled="true">Nouvel article</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href={{ path('contact') }} tabindex="-1" aria-disabled="true">contact</a>
+                    <a class="nav-link" href={{ path('blog/show_all') }} tabindex="-1" aria-disabled="true">Liste article</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href={{ path('blog/accueil') }} tabindex="-1" aria-disabled="true">accueil</a>
                 </li>
             {% endif %}
             </ul>
-            <div class="container">
-                 <a class="btn btn-info" href={{ path('blog/article/new') }} tabindex="-1" aria-disabled="true">New article</a>
-            </div>
-            <div>
-                 <a class="btn btn-primary" href={{ path('blog/show_all') }}><button>List</button></a>
-            </div>
         </div>
     </nav>
 {% endblock %}

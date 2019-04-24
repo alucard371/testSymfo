@@ -1,62 +1,6 @@
 {% extends 'section/layout.html.twig' %}
 
-{% block header %}
 
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Raining Cats</a>
-
-        <h1>{{ current }}</h1>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                {% if current == 'blog/accueil' %}
-                    <li class="nav-item">
-                        <a class="nav-link active" href={{ path('blog/accueil') }} tabindex="-1" aria-disabled="true">accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle nav-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="true">
-                            Articles
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href={{ path('blog/show', {id: 1}) }}>article 1</a>
-                            <a class="dropdown-item" href={{ path('blog/show',
-                            {id:2}) }}>article 2</a>
-                            <a class="dropdown-item" href={{ path('blog/show',
-                            {id:3}) }}>article 3</a>
-                        </div>
-                    </div>
-                    </li>
-                    
-                {% elseif current ==  'blog/show' %}
-                    <li class="nav-item">
-                        <a class="nav-link" href={{ path('blog/accueil') }} tabindex="-1" aria-disabled="true">mentions</a>
-                    </li>
-                    <li class="nav-item">
-                        <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle nav-link active" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="true">
-                            Articles
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href={{ path('blog/show', {id: 1}) }}>article 1</a>
-                            <a class="dropdown-item" href={{ path('blog/show',
-                            {id:2}) }}>article 2</a>
-                            <a class="dropdown-item" href={{ path('blog/show',
-                            {id:3}) }}>article 3 else here</a>
-                        </div>
-                    </div>
-                    </li>
-                {% endif %}
-            </ul>
-            <form class="form-inline mt-2 mt-md-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
-{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -80,18 +24,9 @@
 
         <div class="nav-scroller py-1 mb-2">
             <nav class="nav d-flex justify-content-between">
-                <a class="p-2 text-muted" href="#">World</a>
-                <a class="p-2 text-muted" href="#">U.S.</a>
-                <a class="p-2 text-muted" href="#">Technology</a>
-                <a class="p-2 text-muted" href="#">Design</a>
-                <a class="p-2 text-muted" href="#">Culture</a>
-                <a class="p-2 text-muted" href="#">Business</a>
-                <a class="p-2 text-muted" href="#">Politics</a>
-                <a class="p-2 text-muted" href="#">Opinion</a>
-                <a class="p-2 text-muted" href="#">Science</a>
-                <a class="p-2 text-muted" href="#">Health</a>
-                <a class="p-2 text-muted" href="#">Style</a>
-                <a class="p-2 text-muted" href="#">Travel</a>
+                 {% for article in articles %}
+                        <a class="p-2 text-muted" href={{ path('blog/show', {id: article.id}) }}>article {{ article.id }}</a>
+                {% endfor %}
             </nav>
         </div>
 
@@ -150,86 +85,20 @@
                     From the Firehose
                 </h3>
 
-                <div class="blog-post">
-                    <h2 class="blog-post-title">Sample blog post</h2>
-                    <p class="blog-post-meta">January 1, 2014 by
-                        <a href="#">Mark</a>
+                {% for article in articles %}
+                    <div class="blog-post">
+                    <h2 class="blog-post-title">{{ article.titre }}</h2>
+                    <p class="blog-post-meta">{{ article.creationdate|date('d-m-Y H:i:s') }}
+                        <a href="#">{{ article.auteur }}</a>
                     </p>
 
-                    <p>This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
-                    <hr>
-                    <p>Cum sociis natoque penatibus et magnis
-                        <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-                    <blockquote>
-                        <p>Curabitur blandit tempus porttitor.
-                            <strong>Nullam quis risus eget urna mollis</strong>
-                            ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </blockquote>
-                    <p>Etiam porta
-                        <em>sem malesuada magna</em>
-                        mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-                    <h2>Heading</h2>
-                    <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                    <h3>Sub-heading</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                    <pre><code>example code block</code></pre>
-                    <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-                    <h3>Sub-heading</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <ul>
-                        <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-                        <li>Donec id elit non mi porta gravida at eget metus.</li>
-                        <li>Nulla vitae elit libero, a pharetra augue.</li>
-                    </ul>
-                    <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-                    <ol>
-                        <li>Vestibulum id ligula porta felis euismod semper.</li>
-                        <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
-                        <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-                    </ol>
-                    <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
+                    <p>{{ article.corps }}</p>
                 </div>
                 <!-- /.blog-post -->
+                {% endfor %}
+                
 
-                <div class="blog-post">
-                    <h2 class="blog-post-title">Another blog post</h2>
-                    <p class="blog-post-meta">December 23, 2013 by
-                        <a href="#">Jacob</a>
-                    </p>
-
-                    <p>Cum sociis natoque penatibus et magnis
-                        <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-                    <blockquote>
-                        <p>Curabitur blandit tempus porttitor.
-                            <strong>Nullam quis risus eget urna mollis</strong>
-                            ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </blockquote>
-                    <p>Etiam porta
-                        <em>sem malesuada magna</em>
-                        mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-                    <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                </div>
-                <!-- /.blog-post -->
-
-                <div class="blog-post">
-                    <h2 class="blog-post-title">New feature</h2>
-                    <p class="blog-post-meta">December 14, 2013 by
-                        <a href="#">Chris</a>
-                    </p>
-
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <ul>
-                        <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-                        <li>Donec id elit non mi porta gravida at eget metus.</li>
-                        <li>Nulla vitae elit libero, a pharetra augue.</li>
-                    </ul>
-                    <p>Etiam porta
-                        <em>sem malesuada magna</em>
-                        mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-                    <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-                </div>
-                <!-- /.blog-post -->
-
+               
                 <nav class="blog-pagination">
                     <a class="btn btn-outline-primary" href="#">Older</a>
                     <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>

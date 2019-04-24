@@ -2,93 +2,127 @@
 
 {% block body %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light articles-menu">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-     {% for art in articles %}
-        <li class="nav-item active">
-            <a class="nav-link" href={{ path('blog/show',{ "id" : art.id} ) }}>
-            {{ art.id|e }}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                {% for article in articles %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href={{ path('blog/show',{ "id" : article.id} ) }}>
+                            {{ article.id|e }}
+                        </a>
+                    </li>
+                {% endfor %}
+                <a class="btn btn-primary" href={{ path('blog/destroy',{ 'id' : article.id} ) }}>
+                    <button>effacer
+                        {{ article.id|e }}</button>
+                </a>
+            </ul>
+        </div>
+    </nav>
+    <div>
+        <span>{{ article.auteur }}</span>
+        <span>{{ article.titre }}</span>
+        <span>{{ article.corps }}</span>
+        <span>{{ article.creationDate|date("m/d/Y", "Europe/Paris") }}</span>
+    </div>
+
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-striped table-dark">
+                
+                {% for comment in article.comments %}
+                  {% if comment is defined and comment is not null %}
+                    <p>{{ comment.id }} exists</p>
+                  {% else %}
+                    <p>The comment does not exists</p>
+                  {% endif %}
+                {% endfor %}
+                </h1>
+                <tbody>
+                    <tr>
+                        <th scope="row">id</th>
+                        {% for comment in article.comments %}
+                          {% if comment.id|length <= 0 %}
+                            <th scope="col">Pas d'id</th>
+                          {% else %}
+                          <th scope="col">{{  comment.id  }}</th>
+                          {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th scope="row">auteur</th>
+                        {% for comment in article.comments %}
+                            {% if comment.author|length <= 0 %}
+                              <th scope="col">Pas d'auteur</th>
+                            {% else %}
+                              <th scope="col">{{  comment.author  }}</th>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th scope="row">description</th>
+                        {% for comment in article.comments %}
+                            {% if comment.description|length <= 0 %}
+                              <th scope="col">Pas de description</th>
+                            {% else %}
+                              <th scope="col">{{  comment.description  }}</th>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th scope="row">corps</th>
+                        {% for comment in article.comments %}
+                             {% if comment.corps|length <= 0 %}
+                              <th scope="col">Pas de corps</th>
+                            {% else %}
+                              <th scope="col">{{  comment.corps  }}</th>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th scope="row">destroy</th>
+                        {% for comment in article.comments %}
+                            <td>
+                                <a class="btn btn-primary" href={{ path('blog/destroyComment',{ 'id' : comment.id} ) }}>
+                                    <button>effacer
+                                        {{ comment.id }}</button>
+                                </a>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container">
+        <section>
+            {{form_start(form)}}
+            {# general errors #}
+            {{form_errors(form)}}
+
+            {{ form_label(form.author) }}
+            {{ form_widget(form.author) }}
+            {# fields errors #}
+            {{ form_errors(form.author) }}
+
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
+            {# fields errors #}
+            {{ form_errors(form.description) }}
+
+            {{ form_label(form.corps) }}
+            {{ form_widget(form.corps) }}
+            {# fields errors #}
+            {{ form_errors(form.corps) }}
+
+            <a class="btn btn-primary">
+                <button>submit</button>
             </a>
-        </li>
-    {% endfor %}
-     <a class="btn btn-primary" href={{ path('blog/destroy',{ 'id' : article.id}) }}><button>effacer {{ article.id }}</button></a>
-    </ul>
-  </div>
-</nav>
-<div>
-  <span>{{ article.auteur }}</span>
-  <span>{{ article.titre }}</span>
-  <span>{{ article.corps }}</span> 
-  <span>{{ article.creationDate|date("m/d/Y", "Europe/Paris") }}</span>
-</div>
 
-<div class="container">
-<table class="table table-striped table-dark">
-  <h1>Comentaires</h1>
-  <tbody>
-    <tr>
-    <th scope="row">id</th>
-      {% for comment in article.comments %}
-      <th scope="col">{{ comment.id }}</th>
-      {% endfor %}
-    </tr>
-    <tr>
-      <th scope="row">auteur</th>
-      {% for comment in article.comments %}
-      <td>{{ comment.author }}</th>
-      {% endfor %}
-    </tr>
-    <tr>
-      <th scope="row">description</th>
-       {% for comment in article.comments %}
-      <td>{{ comment.description }}</th>
-      {% endfor %}
-    </tr>
-    <tr>
-      <th scope="row">corps</th>
-       {% for comment in article.comments %}
-      <td>{{ comment.corps }}</th>
-      {% endfor %}
-    </tr>
-    <tr>
-    <th scope="row">destroy</th>
-    {% for comment in article.comments %}
-      <td>
-          <a class="btn btn-primary" href={{ path('blog/destroyComment',{ 'id' : comment.id}) }}><button>effacer {{ comment.id }}</button></a>
-      </td>
-      {% endfor %}
-    </tr>
-  </tbody>
-</table>
-</div>
+            {{form_end(form)}}
 
-<div class="container">
-<section>
-{{form_start(form)}}
-{# general errors #}
-{{form_errors(form)}}
-
-{{ form_label(form.author) }}
-{{ form_widget(form.author) }}
-{# fields errors #}
-{{ form_errors(form.author) }}
-
-{{ form_label(form.description) }}
-{{ form_widget(form.description) }}
-{# fields errors #}
-{{ form_errors(form.description) }}
-
-{{ form_label(form.corps) }}
-{{ form_widget(form.corps) }}
-{# fields errors #}
-{{ form_errors(form.corps) }}
-
-<a class="btn btn-primary"><button>submit</button></a>
-
-{{form_end(form)}}
-
-</div>
-{% endblock %}
+        </div>
+    {% endblock %}
