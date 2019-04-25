@@ -93,10 +93,41 @@ class BlogController extends AbstractController
         return $this->render('blog/user/profile.html.twig', [
             'user' => $user,
   ]);
+    }
 
+    /**
+     * @Route("profile/{id}/Owner/add", name="Owner/add", requirements={"^[1-9]\d*$"})
+     */
+    public function addOwner($id,Request $request, User $user)
+    {
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id ' . $id
+            );
+        }
 
     }
 
+    /**
+     * @Route("profile/{id}/Adopter/add", name="Adopter/add", requirements={"^[1-9]\d*$"})
+     */
+    public function addAdopter($id,Request $request, User $user)
+    {
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id ' . $id
+            );
+        }
+    }
+    
     /**
      * @Route("/show/{id}", name="show", requirements={"^[1-9]\d*$"})
      */
@@ -359,6 +390,20 @@ class BlogController extends AbstractController
         // $entityManager->removeComment($comment);
         $entityManager->flush();
         $this->addFlash("warning", "votre commentaire à été supprimé");
+        return $this->redirectToRoute('blog/show_all');
+    }
+
+    /**
+     * @Route("/profile/destroy/{id}", name="destroyUser")
+     */
+    public function removeUser($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $user = $repository->find($id);
+        $entityManager->remove($user);
+        $entityManager->flush();
+        $this->addFlash("warning", "votre utilisateur à été supprimé");
         return $this->redirectToRoute('blog/show_all');
     }
 
