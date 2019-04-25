@@ -4,7 +4,6 @@
 {% block title %}layout!{% endblock %}
 
 {% block header %}
-    
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href={{ path('blog/accueil') }}>Raining Cats</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,6 +41,12 @@
                 <li class="nav-item">
                     <a class="nav-link active" href={{ path('blog/accueil') }} tabindex="-1" aria-disabled="true">accueil</a>
                 </li>
+            {% endif %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="btn btn-sm btn-outline-secondary" href={{ path('app_logout') }}>Log out</a>
+            {% else %}
+                    <a class="btn btn-sm btn-outline-secondary" href={{ path('app_login') }}>Log in</a>
+                    <a class="btn btn-sm btn-outline-secondary" href={{ path('user_registration') }}>Register</a>
             {% endif %}
             </ul>
         </div>

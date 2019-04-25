@@ -32,14 +32,11 @@ class RegisterType extends AbstractType
             ->add('name', TextType::class)
             ->add('prenom', TextType::class)
             ->add('age', IntegerType::class)
-            ->add('avatar', FileType::class, ['label' => 'Avatar (jpg,jpeg,png'])
+            ->add('avatar', FileType::class, ['label' => 'Avatar (png'])
             ->add('roles', ChoiceType::class,[
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
                     'User' => 'ROLE_USER',
-                    'Owner'=> 'ROLE_OWNER',
-                    'Adopter'=> 'ROLE_ADOPTER',
-                    'Both' => 'ROLE_BOTH',
                 ],
                 'multiple' => true,
             ])

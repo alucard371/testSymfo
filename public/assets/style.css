@@ -14,3 +14,7 @@ th {
 table {
     text-align: center;
 }
+
+.corpsArt {
+    word-break: break-all;
+}

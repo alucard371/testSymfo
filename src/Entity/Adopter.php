@@ -41,10 +41,10 @@ class Adopter
      */
     private $motivation;
 
-    /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="adopter")
-     */
-    private $user;
+    // /**
+    //  * @ORM\OneToOne(targetEntity="User", inversedBy="adopter")
+    //  */
+    // private $user;
 
     public function getUser()
     {

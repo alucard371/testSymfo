@@ -26,10 +26,10 @@ class Owner
      */
     private $fee;
 
-    /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="owner")
-     */
-    private $user;
+    // /**
+    //  * @ORM\OneToOne(targetEntity="User", inversedBy="owner")
+    //  */
+    // private $user;
 
     public function getUser()
     {

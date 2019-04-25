@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -30,10 +31,32 @@ use knp_paginator;
 class BlogController extends AbstractController
 {
     /**
+     * @Route("/test", name="test")
+     */
+    public function testApi()
+    {
+        return $this->render('blog/testApi.html.twig');
+    }
+
+    /**
      * @Route("/accueil", name="accueil")
      */
-    public function accueil()
+    public function accueil(Request $request, PaginatorInterface $paginator)
     {
+
+        $query = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->createQueryBuilder('articles')
+            
+            // ->from('Article', 'articles')
+            ->addOrderBy('articles.id', 'ASC')
+            ->getQuery();
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            5
+        );
         $articles = $this->getDoctrine()
         ->getRepository(Article::class)
         ->findAll();
@@ -46,8 +69,32 @@ class BlogController extends AbstractController
 
         return $this->render('blog/accueil.html.twig', [
             'articles' => $articles,
+            'pagination' => $pagination,
             
         ]);
+    }
+
+    /**
+     * @Route("/profile/{id}", name="profile", requirements={"^[1-9]\d*$"})
+     */
+    public function showProfile($id, Request $request, User $user)
+    {
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+
+        // dd($user);
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id ' . $id
+            );
+        }
+
+        return $this->render('blog/user/profile.html.twig', [
+            'user' => $user,
+  ]);
+
+
     }
 
     /**
@@ -65,28 +112,30 @@ class BlogController extends AbstractController
             );
         }
 
-           // creates a comment
-           $comment = new Comment();
-           $form = $this->createForm(CommentType::class, $comment);
+        $comments = $article->getComments();
 
-           $form->handleRequest($request);
+        // creates a comment
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
 
-              if ($form->isSubmitted() && $form->isValid()) {
+        $form->handleRequest($request);
 
-                  $entityManager = $this->getDoctrine()->getManager();
-                  $article->addComment($comment);
-                  $entityManager->persist($comment);
-                //   $comment->setArticle($article);
-                  $entityManager->flush();
-                  
-                  $this->addFlash(
-                    'notice',
-                    'Votre commentaire à été créer !'
-                );
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $article->addComment($comment);
+                $entityManager->persist($comment);
+            //   $comment->setArticle($article);
+                $entityManager->flush();
                 
-            //     return $this->redirectToRoute('show',
-            // ['id' => $id]);
-              }
+                $this->addFlash(
+                'notice',
+                'Votre commentaire à été créer !'
+            );
+            
+        //     return $this->redirectToRoute('show',
+        // ['id' => $id]);
+            }
 
         $articles = $this->getDoctrine()
         ->getRepository(Article::class)
@@ -128,9 +177,6 @@ class BlogController extends AbstractController
             5
         );
         
-
-        
-
         if (!$articles) {
             throw $this->createNotFoundException(
                 'No articles found'
@@ -144,7 +190,6 @@ class BlogController extends AbstractController
             'articles' => $articles,
             'pagination' => $pagination,
             ]);
-        
     }
 
 

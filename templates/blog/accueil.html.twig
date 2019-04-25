@@ -17,16 +17,25 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewbox="0 0 24 24" focusable="false">
                             <title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
                     </a>
-                    <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+                    
                 </div>
             </div>
         </header>
 
         <div class="nav-scroller py-1 mb-2">
             <nav class="nav d-flex justify-content-between">
-                 {% for article in articles %}
+                 {# {% for article in articles %}
                         <a class="p-2 text-muted" href={{ path('blog/show', {id: article.id}) }}>article {{ article.id }}</a>
+                {% endfor %} #}
+                {% for article in pagination %}
+                    <tr {% if loop.index is odd %}class="color"{% endif %}>
+                    {# <td>{{ article.id }}</td> #}
+                    <a class="p-2 text-muted" href={{ path('blog/show', {id: article.id}) }}>article {{ article.id }}</a>
                 {% endfor %}
+                {# display navigation #}
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </nav>
         </div>
 
@@ -82,27 +91,33 @@
         <div class="row">
             <div class="col-md-8 blog-main">
                 <h3 class="pb-4 mb-4 font-italic border-bottom">
-                    From the Firehose
+                    Articles
                 </h3>
-
-                {% for article in articles %}
+                {% for article in pagination %}
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
+            <td>{{ article.id }}</td>
+            <td>{{ article.titre }}</td>
+            <td>{{ article.corps }}</td>
+        </tr>
+    {% endfor %}
+                {% for article in pagination %}
+                <tr {% if loop.index is odd %}class="color"{% endif %}>
                     <div class="blog-post">
-                    <h2 class="blog-post-title">{{ article.titre }}</h2>
-                    <p class="blog-post-meta">{{ article.creationdate|date('d-m-Y H:i:s') }}
-                        <a href="#">{{ article.auteur }}</a>
-                    </p>
-
-                    <p>{{ article.corps }}</p>
-                </div>
+                        <h2 class="blog-post-title">{{ article.titre }}</h2>
+                        <p class="blog-post-meta">{{ article.creationdate|date('d-m-Y H:i:s') }}
+                            <a href="#">{{ article.auteur }}</a>
+                        </p>
+                        <p class="corpsArt">{{ article.corps }}</p>
+                    </div>
                 <!-- /.blog-post -->
                 {% endfor %}
                 
 
                
-                <nav class="blog-pagination">
-                    <a class="btn btn-outline-primary" href="#">Older</a>
-                    <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
-                </nav>
+                {# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
 
             </div>
             <!-- /.blog-main -->
@@ -179,6 +194,13 @@
 
     </main>
     <!-- /.container -->
+
+   {# total items count #}
+<div class="count">
+    {{ pagination.getTotalItemCount }}
+</div>
+
+
 {% endblock %}
 
 
