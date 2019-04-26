@@ -6,11 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="Email already taken")
- * * @UniqueEntity(fields="username", message="username already taken")
+ * @UniqueEntity(fields="username", message="username already taken")
  */
 class User implements UserInterface
 {
@@ -32,7 +33,6 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
      * @Assert\Length(min=5)
-     *  @ORM\Column(type="string", length=100)
      * @Length(
      * min=5,
      * max=100,
@@ -46,7 +46,7 @@ class User implements UserInterface
      * This password length works well with bcrypt
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=64)
-     * @Assert\Length(min=64)
+     * @Assert\Length(min=6)
      */
     private $password;
 
@@ -98,39 +98,39 @@ class User implements UserInterface
 
     /**
      * One user can be adopter
-     * @ORM\OneToOne(targetEntity="Adopter", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="Adopter", mappedBy="user", inversedBy="adopter")
      */
-    // private $adopter;
+    private $adopter;
 
     // /**
     //  * One user can be owner
-    //  * @ORM\OneToOne(targetEntity="Owner", mappedBy="user")
+    //  * @ORM\OneToOne(targetEntity="Owner", mappedBy="user", inversedBy="owner")
     //  */
-    // private $owner;
+    private $owner;
     
-    // public function getAdopter()
-    // {
-    //     return $this->adopter;
-    // }
+    public function getAdopter()
+    {
+        return $this->adopter;
+    }
 
-    // public function setAdopter($adopter)
-    // {
-    //     $this->adopter = $adopter;
+    public function setAdopter($adopter)
+    {
+        $this->adopter = $adopter;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function getOwner()
-    // {
-    //     return $this->owner;
-    // }
+    public function getOwner()
+    {
+        return $this->owner;
+    }
 
-    // public function setOwner($owner)
-    // {
-    //     $this->owner = $owner;
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function __construct()
     {
@@ -253,7 +253,6 @@ class User implements UserInterface
      */
     public function getSalt()
     {
-        // not needed for apps that do not check user passwords
     }
 
     /**
@@ -261,8 +260,6 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 
     /**

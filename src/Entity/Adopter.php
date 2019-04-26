@@ -3,7 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Length;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdopterRepository")
  */
@@ -61,7 +62,6 @@ class Adopter
 
      /**
      * An Adopter is One User.
-     * @Assert\NotBlank
      * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */

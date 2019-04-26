@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class RegisterType extends AbstractType
 {
@@ -28,18 +29,11 @@ class RegisterType extends AbstractType
                 'first_options' => array('label' => 'password'),
                 'second_options' => array('label' => 'repeat password')
             ))
-            ->add('create_time')
+            ->add('create_time', DateType::class)
             ->add('name', TextType::class)
             ->add('prenom', TextType::class)
             ->add('age', IntegerType::class)
             ->add('avatar', FileType::class, ['label' => 'Avatar (png'])
-            ->add('roles', ChoiceType::class,[
-                'choices' => [
-                    'Admin' => 'ROLE_ADMIN',
-                    'User' => 'ROLE_USER',
-                ],
-                'multiple' => true,
-            ])
             ->add('termsAccepted', CheckboxType::class, array(
                 'mapped' => false,
                 'constraints' => new isTrue(),

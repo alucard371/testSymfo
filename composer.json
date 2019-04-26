@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.6",
+        "hillrange/ckeditor": "^1.0",
         "knplabs/knp-paginator-bundle": "^3.0",
         "sensio/framework-extra-bundle": "^5.3",
         "symfony/asset": "4.2.*",

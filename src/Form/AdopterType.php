@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AdopterType extends AbstractType
 {
@@ -15,9 +16,9 @@ class AdopterType extends AbstractType
         $builder
             ->add('kids', TextType::class)
             ->add('married', TextType::class)
-            ->add('description', TextType::class)
-            ->add('presentation', TextType::class)
-            ->add('motivation', TextType::class)
+            ->add('description', TextareaType::class, array('attr' => array('class' => 'ckeditor') ))
+            ->add('presentation', TextareaType::class, array('attr' => array('class' => 'ckeditor') ))
+            ->add('motivation', TextareaType::class, array('attr' => array('class' => 'ckeditor') ))
         ;
     }
 

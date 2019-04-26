@@ -27,8 +27,10 @@ class ArticleType extends AbstractType
                   'label' => 'titre'
               ])
               ->add('corps', TextareaType::class,[
-                  'label' => 'corps'
-              ])
+                  'label' => 'corps',
+              ],
+              array('attr' => array('class' => 'ckeditor') )
+              )
               ->add('categorie', ChoiceType::class,[
                   'choices' => [
                       'health' => 'health',

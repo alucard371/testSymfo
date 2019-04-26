@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+
 use App\Entity\Article;
 use App\Entity\Comment;
 use App\Entity\User;
@@ -251,6 +252,8 @@ class BlogController extends AbstractController
   ]);
     }
 
+    // Article section
+
     /**
      * @Route("/show", name="show_all")
      */
@@ -289,7 +292,6 @@ class BlogController extends AbstractController
             'pagination' => $pagination,
             ]);
     }
-
 
     /**
      * @Route("/article/new", name="article/new")
@@ -388,6 +390,24 @@ class BlogController extends AbstractController
           ]);
     }
 
+     /**
+     * @Route("/article/destroy/{id}", name="destroy")
+     */
+    public function destroyArticle($id)
+    {
+        $article = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->find($id);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($article);
+            $entityManager->flush();
+
+            $this->addFlash("warning", "votre article à été supprimé");
+            return $this->redirectToRoute('blog/accueil');
+            
+    }
+
     /**
      * @Route("/article/{slug}/comment/edit/{id}", name="comment/edit", requirements={"^[1-9]\d*$"})
      */
@@ -422,29 +442,9 @@ class BlogController extends AbstractController
               'comment' => $comment,
               'form' => $form->createView(),
     ]);
-
-
     }
 
-    /**
-     * @Route("/article/destroy/{id}", name="destroy")
-     */
-    public function destroyArticle($id)
-    {
-        $article = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->find($id);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($article);
-            $entityManager->flush();
-
-            $this->addFlash("warning", "votre article à été supprimé");
-            return $this->redirectToRoute('blog/accueil');
-            
-    }
-
-    /**
+     /**
      * @Route("/article/comment/destroy/{id}", name="destroyComment")
      */
     public function destroyComment($id)
@@ -458,6 +458,10 @@ class BlogController extends AbstractController
         $this->addFlash("warning", "votre commentaire à été supprimé");
         return $this->redirectToRoute('blog/show_all');
     }
+
+   
+
+   
 
     /**
      * @Route("/profile/destroy/{id}", name="destroyUser")
