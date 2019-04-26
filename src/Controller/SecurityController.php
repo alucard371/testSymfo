@@ -24,7 +24,7 @@ class SecurityController extends AbstractController
 
     public function logout()
     {
-        //Un controleur ne peut être vide
+        //A controller cant be empty
         throw new \Exception('Activer logout dans security.yaml');
     }
 }

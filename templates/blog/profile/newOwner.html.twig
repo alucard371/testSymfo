@@ -1,0 +1,32 @@
+{% extends 'section/layout.html.twig' %}
+
+
+{% block title %}Add an owner !{% endblock %}
+
+{% block body %}
+{{ user.id }}
+{{ user.name }}
+
+<section>
+{{form_start(form)}}
+{# general errors #}
+{{form_errors(form)}}
+
+{{ form_label(form.seniority) }}
+{{ form_widget(form.seniority) }}
+{# fields errors #}
+{{ form_errors(form.seniority) }}
+
+{{ form_label(form.fee) }}
+{{ form_widget(form.fee) }}
+{# fields errors #}
+{{ form_errors(form.fee) }}
+
+<a class="btn btn-primary">
+    <button>submit</button>
+</a>
+
+{{form_end(form)}}
+
+</section>
+{% endblock %}

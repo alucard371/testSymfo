@@ -1,0 +1,42 @@
+{% extends 'section/layout.html.twig' %}
+
+
+{% block title %}Become an adopter{% endblock %}
+
+{% block body %}
+{{ user.id }}
+{{ user.name }}
+
+<section>
+{{form_start(form)}}
+{# general errors #}
+{{form_errors(form)}}
+
+{{ form_label(form.married) }}
+{{ form_widget(form.married) }}
+{# fields errors #}
+{{ form_errors(form.married) }}
+
+{{ form_label(form.description) }}
+{{ form_widget(form.description) }}
+{# fields errors #}
+{{ form_errors(form.description) }}
+
+{{ form_label(form.presentation) }}
+{{ form_widget(form.presentation) }}
+{# fields errors #}
+{{ form_errors(form.presentation) }}
+
+{{ form_label(form.motivation) }}
+{{ form_widget(form.motivation) }}
+{# fields errors #}
+{{ form_errors(form.motivation) }}
+
+<a class="btn btn-primary">
+    <button>submit</button>
+</a>
+
+{{form_end(form)}}
+
+</section>
+{% endblock %}

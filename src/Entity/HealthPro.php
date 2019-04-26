@@ -18,17 +18,37 @@ class HealthPro
     private $id;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(min=2)
      * @ORM\Column(type="string", length=100)
+     * @Length(
+     * min=2,
+     * max=100,
+     * minMessage = "Your speciality name must be at least {{ limit }} characters long",
+     * maxMessage = "Your speciality name cannot be longer than {{ limit }} characters")
      */
     private $speciality;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Length(
+     * min=2,
+     * max=100,
+     * minMessage = "Your seniority must be at least {{ limit }} characters long",
+     * maxMessage = "Your seniority name cannot be longer than {{ limit }} characters")
+     * 
      */
     private $seniority;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=100)
+     * @Length(
+     * min=2,
+     * max=100,
+     * minMessage = "Your location name must be at least {{ limit }} characters long",
+     * maxMessage = "Your location name cannot be longer than {{ limit }} characters")
      */
     private $location;
 
@@ -38,12 +58,12 @@ class HealthPro
     private $age;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $fee;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $comments_id;
 

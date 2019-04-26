@@ -17,19 +17,30 @@ class Owner
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank
      */
     private $seniority;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
+     * @Assert\Length(min=3)
+     * @Length(
+     * min=3,
+     * max=10,
+     * minMessage = "Your fee name name must be at least {{ limit }} characters long",
+     * maxMessage = "Your fee name name cannot be longer than {{ limit }} characters")
      */
     private $fee;
 
-    // /**
-    //  * @ORM\OneToOne(targetEntity="User", inversedBy="owner")
-    //  */
-    // private $user;
+    /**
+     * An Owner is One User.
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+
 
     public function getUser()
     {

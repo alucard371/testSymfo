@@ -48,6 +48,15 @@
                     <a class="btn btn-sm btn-outline-secondary" href={{ path('app_login') }}>Log in</a>
                     <a class="btn btn-sm btn-outline-secondary" href={{ path('user_registration') }}>Register</a>
             {% endif %}
+            <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Lister animaux
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href={{ path('blog/cats') }}>Chats</a>
+    <a class="dropdown-item" href={{ path('blog/dogs') }}>Chiens</a>
+  </div>
+</div>
             </ul>
         </div>
     </nav>

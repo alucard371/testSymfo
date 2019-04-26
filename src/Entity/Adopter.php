@@ -27,24 +27,45 @@ class Adopter
     private $married;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @ORM\Column(type="text", length=100)
+     * @Length(
+     * min=2,
+     * max=100,
+     * minMessage = "Your description must be at least {{ limit }} characters long",
+     * maxMessage = "Your description cannot be longer than {{ limit }} characters")
      */
     private $description;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @ORM\Column(type="text", length=100)
+     * @Length(
+     * min=2,
+     * max=100,
+     * minMessage = "Your presentation must be at least {{ limit }} characters long",
+     * maxMessage = "Your presentation cannot be longer than {{ limit }} characters")
      */
     private $presentation;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @ORM\Column(type="text", length=100)
+     * @Length(
+     * min=2,
+     * max=100,
+     * minMessage = "Your motivation must be at least {{ limit }} characters long",
+     * maxMessage = "Your motivation cannot be longer than {{ limit }} characters")
      */
     private $motivation;
 
-    // /**
-    //  * @ORM\OneToOne(targetEntity="User", inversedBy="adopter")
-    //  */
-    // private $user;
+     /**
+     * An Adopter is One User.
+     * @Assert\NotBlank
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
 
     public function getUser()
     {

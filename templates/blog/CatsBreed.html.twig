@@ -1,8 +1,10 @@
 {% extends 'section/layout.html.twig' %}
 
 {% block body %}
+
+<a class="btn btn-sm" href={{ path('blog/accueil') }}>Accueil</a>
 <div id="banner-message">
-  <p>Select a Breed</p>
+  
 
   <input id="breed_search" />
 
@@ -12,10 +14,8 @@
 
 </div>
 <div id="breed_data">
-  <img id="breed_image" class="img-fluid img-rounded img-responsive" max-width="50vh" max-height="10vh"/>
-  <p>
-    Breed Data
-  </p>
+  <img id="breed_image" class="img-fluid img-rounded img-responsive" />
+
   <table id="breed_data_table">
 
   </table>

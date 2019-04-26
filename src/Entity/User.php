@@ -24,46 +24,70 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotNull()
+     * @Assert\Length(min=3)
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
+     * @Assert\Length(min=5)
+     *  @ORM\Column(type="string", length=100)
+     * @Length(
+     * min=5,
+     * max=100,
+     * minMessage = "Your email must be at least {{ limit }} characters long",
+     * maxMessage = "Your email cannot be longer than {{ limit }} characters")
      * @Assert\Email()
      */
     private $email;
 
     /**
      * This password length works well with bcrypt
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=64)
+     * @Assert\Length(min=64)
      */
     private $password;
 
     /**
+     * @Assert\Date
      * @ORM\Column(type="datetime")
      */
     private $create_time;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Length(min=3)
+     * @Length(
+     * min=3,
+     * max=100,
+     * minMessage = "Your name must be at least {{ limit }} characters long",
+     * maxMessage = "Your name cannot be longer than {{ limit }} characters")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Length(min=3)
+     * @Length(
+     * min=3,
+     * max=100,
+     * minMessage = "Your speciality name must be at least {{ limit }} characters long",
+     * maxMessage = "Your speciality name cannot be longer than {{ limit }} characters")
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Please, upload the product brochure as a png or jpg pic.")
+     * @Assert\NotBlank(message="Please, upload the product brochure as a png pic.")
      * @Assert\File(mimeTypes={ "image/png" })
      */
     private $avatar;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Length(min=1)
      */
     private $age;
 
@@ -72,43 +96,41 @@ class User implements UserInterface
      */
     private $roles = [];
 
-    // /**
-    //  * One user can be adopter
-    //  * @ORM\OneToOne(targetEntity="Adopter", mappedBy="user")
-    //  * @ORM\Column(type="integer", nullable=true)
-    //  */
+    /**
+     * One user can be adopter
+     * @ORM\OneToOne(targetEntity="Adopter", mappedBy="user")
+     */
     // private $adopter;
 
     // /**
     //  * One user can be owner
     //  * @ORM\OneToOne(targetEntity="Owner", mappedBy="user")
-    //  * @ORM\Column(type="integer", nullable=true)
     //  */
     // private $owner;
     
-    public function getAdopter()
-    {
-        return $this->adopter;
-    }
+    // public function getAdopter()
+    // {
+    //     return $this->adopter;
+    // }
 
-    public function setAdopter($adopter)
-    {
-        $this->adopter = $adopter;
+    // public function setAdopter($adopter)
+    // {
+    //     $this->adopter = $adopter;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getOwner()
-    {
-        return $this->owner;
-    }
+    // public function getOwner()
+    // {
+    //     return $this->owner;
+    // }
 
-    public function setOwner($owner)
-    {
-        $this->owner = $owner;
+    // public function setOwner($owner)
+    // {
+    //     $this->owner = $owner;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function __construct()
     {

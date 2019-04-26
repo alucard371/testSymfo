@@ -19,33 +19,11 @@
                             <br />
                             
                             <i class="glyphicon glyphicon-gift"></i>{{ user.createtime|date('Y-m-d H:i:s') }}</p>
-                        <!-- Split button -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary">
-                                Owner</button>
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span><span class="sr-only">Social</span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">yes</a></li>
-                                <li><a href="#">no</a></li>
-                            </ul>
-                        </div>
-                        <div class="btn-group">
                              
                         <a class="btn btn-primary" href={{ path('blog/destroyUser',{ "id" : user.id}) }}><button>destroy</button></a>
+                        <a class="btn btn-primary" href={{ path('blog/adopter/add',{ "id" : user.id}) }}><button>Become an adopter</button></a>
+                        <a class="btn btn-primary" href={{ path('blog/owner/add',{ "id" : user.id}) }}><button>Become an owner</button></a>
                     
-                        </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary">
-                                Adopter</button>
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span><span class="sr-only">Social</span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">yes</a></li>
-                                <li><a href="#">no</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>

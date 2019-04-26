@@ -7,6 +7,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Article;
 use App\Entity\Comment;
 use App\Entity\User;
+use App\Entity\Owner;
+use App\Entity\Adopter;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -15,6 +18,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\ArticleType;
 use App\Form\CommentType;
+use App\Form\OwnerType;
+use App\Form\AdopterType;
 
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -30,12 +35,21 @@ use knp_paginator;
 /** @Route("/blog", name="blog/") */
 class BlogController extends AbstractController
 {
+
     /**
-     * @Route("/test", name="test")
+     * @Route("/cats", name="cats")
      */
-    public function testApi()
+    public function CatsBreed()
     {
-        return $this->render('blog/testApi.html.twig');
+        return $this->render('blog/CatsBreed.html.twig');
+    }
+
+    /**
+     * @Route("/dogs", name="dogs")
+     */
+    public function testDogsBreed()
+    {
+        return $this->render('blog/DogsBreed.html.twig');
     }
 
     /**
@@ -96,7 +110,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("profile/{id}/Owner/add", name="Owner/add", requirements={"^[1-9]\d*$"})
+     * @Route("/profile/{id}/Owner/add", name="owner/add", requirements={"^[1-9]\d*$"})
      */
     public function addOwner($id,Request $request, User $user)
     {
@@ -110,10 +124,39 @@ class BlogController extends AbstractController
             );
         }
 
+          // creates an owner
+          $owner = new Owner();
+
+        
+          $form = $this->createForm(OwnerType::class, $owner);
+  
+                $form->handleRequest($request);
+  
+                if ($form->isSubmitted() && $form->isValid()) {
+                    // $form->getData() holds the submitted values
+                    // but, the original `$owner` variable has also been updated
+                    $owner = $form->getData();
+            
+                    $entityManager = $this->getDoctrine()->getManager();
+                    // $owner->setUser($id);
+                    $entityManager->persist($owner);
+                    $entityManager->flush();
+                    
+                    $this->addFlash(
+                      'notice',
+                      'Votre owner à été créer !'
+                  );
+                }
+
+                return $this->render('blog/profile/newOwner.html.twig', [
+                    'user' => $user,
+                    'form' => $form->createView(),
+          ]);
+
     }
 
     /**
-     * @Route("profile/{id}/Adopter/add", name="Adopter/add", requirements={"^[1-9]\d*$"})
+     * @Route("/profile/{id}/Adopter/add", name="adopter/add", requirements={"^[1-9]\d*$"})
      */
     public function addAdopter($id,Request $request, User $user)
     {
@@ -126,6 +169,33 @@ class BlogController extends AbstractController
                 'No user found for id ' . $id
             );
         }
+
+          // creates an adopter
+          $adopter = new Adopter();
+
+          $form = $this->createForm(AdopterType::class, $adopter);
+  
+                $form->handleRequest($request);
+  
+                if ($form->isSubmitted() && $form->isValid()) {
+                    // $form->getData() holds the submitted values
+                    // but, the original `$owner` variable has also been updated
+                    $adopter = $form->getData();
+                    // $adopter->setUser($id);
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($adopter);
+                    $entityManager->flush();
+                    
+                    $this->addFlash(
+                      'notice',
+                      'Vous avez le statut de demandeur !'
+                  );
+                }
+
+                return $this->render('blog/profile/newAdopter.html.twig', [
+                    'user' => $user,
+                    'form' => $form->createView(),
+          ]);
     }
     
     /**
@@ -163,9 +233,6 @@ class BlogController extends AbstractController
                 'notice',
                 'Votre commentaire à été créer !'
             );
-            
-        //     return $this->redirectToRoute('show',
-        // ['id' => $id]);
             }
 
         $articles = $this->getDoctrine()
@@ -345,7 +412,6 @@ class BlogController extends AbstractController
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($comment);
-              //$comment->setArticle($article);
                 $entityManager->flush();
                 
                 

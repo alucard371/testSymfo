@@ -22,13 +22,13 @@ class Article
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=100)
      * @Assert\NotNull
      * @Length(
      * min=2,
      * max=100,
-     * minMessage = "Your name must be at least {{ limit }} characters long",
-     * maxMessage = "Your name cannot be longer than {{ limit }} characters")
+     * minMessage = "Your author name must be at least {{ limit }} characters long",
+     * maxMessage = "Your author name cannot be longer than {{ limit }} characters")
      *
      */
     private $auteur;
@@ -36,6 +36,12 @@ class Article
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     *@Length(
+     * min=2,
+     * max=255,
+     * minMessage = "Your article body must be at least {{ limit }} characters long",
+     * maxMessage = "Your article body cannot be longer than {{ limit }} characters")
+     * 
      */
     private $corps;
 
@@ -46,8 +52,13 @@ class Article
     private $creation_date;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=45)
      * @ASSERT\NotBlank
+     * @Length(
+     * min=2,
+     * max=45,
+     * minMessage = "Your title must be at least {{ limit }} characters long",
+     * maxMessage = "Your title cannot be longer than {{ limit }} characters")
      */
     private $titre;
 
@@ -57,7 +68,13 @@ class Article
     private $comments;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=10)
+     * @Length(
+     * min=0,
+     * max=10,
+     * minMessage = "Your category name must be at least {{ limit }} characters long",
+     * maxMessage = "Your category name cannot be longer than {{ limit }} characters")
      */
     private $categorie;
 

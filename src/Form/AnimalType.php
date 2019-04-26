@@ -6,6 +6,7 @@ use App\Entity\Animal;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AnimalType extends AbstractType
 {
@@ -13,12 +14,8 @@ class AnimalType extends AbstractType
     {
         $builder
             ->add('age')
-            ->add('name')
-            ->add('health')
-            ->add('location_id')
-            ->add('caract_animal_id')
-            ->add('conditions_id')
-            ->add('animal_id')
+            ->add('name', TextType::class)
+            ->add('health', TextType::class)
         ;
     }
 

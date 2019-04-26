@@ -17,17 +17,38 @@ class Comment
     private $id;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(min=3)
      * @ORM\Column(type="string", length=100)
+     * @Length(
+     * min=3,
+     * max=100,
+     * minMessage = "Your author name must be at least {{ limit }} characters long",
+     * maxMessage = "Your author name cannot be longer than {{ limit }} characters")
      */
     private $author;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(min=10)
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Length(
+     * min=10,
+     * max=255,
+     * minMessage = "Your description must be at least {{ limit }} characters long",
+     * maxMessage = "Your description cannot be longer than {{ limit }} characters")
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank
+     * @Assert\Length(min=10)
+     * @ORM\Column(type="string", length=255)
+     * @Length(
+     * min=10,
+     * max=100,
+     * minMessage = "Your comment body must be at least {{ limit }} characters long",
+     * maxMessage = "Your comment body cannot be longer than {{ limit }} characters")
      */
     private $corps;
 

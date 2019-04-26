@@ -23,7 +23,13 @@ class Animal
     private $age;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=50)
+     * @Length(
+     * min=2,
+     * max=50,
+     * minMessage = "Your name must be at least {{ limit }} characters long",
+     * maxMessage = "Your name cannot be longer than {{ limit }} characters")
      */
     private $name;
 
