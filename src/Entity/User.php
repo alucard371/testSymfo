@@ -23,15 +23,13 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     * @Assert\NotNull()
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Length(min=3)
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Length(min=5)
      * @Length(
      * min=5,
@@ -57,7 +55,7 @@ class User implements UserInterface
     private $create_time;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Length(min=3)
      * @Length(
      * min=3,
@@ -80,7 +78,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Please, upload the product brochure as a png pic.")
      * @Assert\File(mimeTypes={ "image/png" })
      */
     private $avatar;

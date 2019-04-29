@@ -33,7 +33,7 @@ class RegisterType extends AbstractType
             ->add('name', TextType::class)
             ->add('prenom', TextType::class)
             ->add('age', IntegerType::class)
-            ->add('avatar', FileType::class, ['label' => 'Avatar (png'])
+            ->add('avatar', FileType::class, ['label' => 'Avatar (png)'])
             ->add('termsAccepted', CheckboxType::class, array(
                 'mapped' => false,
                 'constraints' => new isTrue(),

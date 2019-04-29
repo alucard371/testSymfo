@@ -16,6 +16,16 @@ use App\Form\ResetPasswordType;
 
 class SecurityController extends AbstractController
 {
+
+    private $passwordEncoder;
+
+     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+     {
+         $this->passwordEncoder = $passwordEncoder;
+     }
+
+    
+
     /**
      * @Route("/login", name="app_login")
      */
@@ -47,12 +57,14 @@ class SecurityController extends AbstractController
     	$form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $passwordEncoder = $this->get('security.password_encoder');
-            $oldPassword = $request->request->get('etiquettebundle_user')['oldPassword'];
+            /** @var \Symfony\Component\Security\Core\Encoder\UserPasswordEncoder $passwordEncoder */
+            
+            $oldPassword = $request->request->get('user')['oldPassword'];
 
             // Si l'ancien mot de passe est bon
-            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
-                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            if ($this->passwordEncoder->isPasswordValid($user, $oldPassword)) {
+               
+                $newEncodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($newEncodedPassword);
                 
                 $em->persist($user);
