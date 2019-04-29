@@ -1,0 +1,30 @@
+{% extends 'section/layout.html.twig' %}
+
+
+{% block title %}Change your password{% endblock %}
+
+{% block body %}
+<section>
+{{form_start(form)}}
+{# general errors #}
+{{form_errors(form)}}
+
+{{ form_label(form.oldPassword) }}
+{{ form_widget(form.oldPassword) }}
+{# fields errors #}
+{{ form_errors(form.oldPassword) }}
+
+{{ form_label(form.password) }}
+{{ form_widget(form.password) }}
+{# fields errors #}
+{{ form_errors(form.password) }}
+
+{{ form_label(form.submit) }}
+{{ form_widget(form.submit) }}
+{# fields errors #}
+
+
+{{form_end(form)}}
+
+</section>
+{% endblock %}

@@ -98,13 +98,13 @@ class User implements UserInterface
 
     /**
      * One user can be adopter
-     * @ORM\OneToOne(targetEntity="Adopter", mappedBy="user", inversedBy="adopter")
+     * @ORM\OneToOne(targetEntity="Adopter", mappedBy="user")
      */
     private $adopter;
 
     // /**
     //  * One user can be owner
-    //  * @ORM\OneToOne(targetEntity="Owner", mappedBy="user", inversedBy="owner")
+    //  * @ORM\OneToOne(targetEntity="Owner", mappedBy="user")
     //  */
     private $owner;
     

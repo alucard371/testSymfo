@@ -62,7 +62,7 @@ class Adopter
 
      /**
      * An Adopter is One User.
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\OneToOne(targetEntity="User", inversedBy="adopter")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
